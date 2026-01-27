@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         docker {
-            image 'python:3.11'
+            image 'docker:26-cli'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -24,8 +24,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                  python -m pip install --upgrade pip
-                  pip install beautifulsoup4 requests pytest
+                  apk add --no-cache python3 py3-pip
+                    pip3 install beautifulsoup4 requests pytest 
                 '''
             }
         }
