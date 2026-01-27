@@ -33,8 +33,10 @@ pipeline {
             steps {
             sh '''
             echo "PATH=$PATH"
-            which python || echo "python missing"
-            which python3 || echo "python3 missing"
+                which python || echo "python missing"
+                which python3 || echo "python3 missing"
+                python -m pip --version || echo "pip missing"
+                python3 -m pip --version || echo "pip3 missing"
             '''
             }
         }
