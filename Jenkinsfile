@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "100-movies-qa"
         IMAGE_TAG  = "${BUILD_NUMBER}"
-        ENV        = "qa"
+        ENV        = "prod"
     }
 
     stages {
