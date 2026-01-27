@@ -29,6 +29,16 @@ pipeline {
             }
         }
 
+        stage('Proof') {
+            steps {
+            sh '''
+            echo "PATH=$PATH"
+            which python || echo "python missing"
+            which python3 || echo "python3 missing"
+            '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 sh '''
