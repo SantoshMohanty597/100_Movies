@@ -1,10 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.12-slim'
+            args '-u root:root'
+        }
+    }
 
     environment {
         IMAGE_NAME = "100-movies-dev"
         IMAGE_TAG  = "${BUILD_NUMBER}"
-        ENV = "dev"
+        ENV        = "dev"
     }
 
     stages {
@@ -15,12 +20,21 @@ pipeline {
             }
         }
 
+        stage('Verify Runtime') {
+            steps {
+                sh '''
+                    python --version
+                    pip --version
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 sh '''
                     python -m pip install --upgrade pip
-                    python -m pip install beautifulsoup4 requests
-                    '''
+                    python -m pip install -r requirements.txt
+                '''
             }
         }
 
@@ -33,7 +47,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                  docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
                 '''
             }
         }
@@ -41,7 +55,7 @@ pipeline {
         stage('Deploy to DEV') {
             steps {
                 echo "🚀 Deploying ${IMAGE_NAME}:${IMAGE_TAG} to DEV"
-                // kubectl apply -f dev-deployment.yaml (later)
+                // kubectl apply -f dev-deployment.yaml
             }
         }
     }
