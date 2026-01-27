@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "100-movies-dev"
         IMAGE_TAG  = "${BUILD_NUMBER}"
+        ENV = "dev"
     }
 
     stages {
