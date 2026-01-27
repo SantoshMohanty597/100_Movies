@@ -17,7 +17,10 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install beautifulsoup4 requests pytest'
+                sh '''
+                    python -m pip install --upgrade pip
+                    python -m pip install beautifulsoup4 requests
+                    '''
             }
         }
 
