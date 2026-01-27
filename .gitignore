@@ -1,0 +1,5 @@
+# Jenkins runtime data
+kind-storage1/
+
+# IDE files
+.idea/
