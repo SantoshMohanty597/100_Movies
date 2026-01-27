@@ -1,10 +1,16 @@
 pipeline {
-    agent any
+
+    agent {
+        docker {
+            image 'python:3.11'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         IMAGE_NAME = "100-movies-dev"
         IMAGE_TAG  = "${BUILD_NUMBER}"
-        ENV = "dev"
+        ENV        = "dev"
     }
 
     stages {
@@ -17,7 +23,10 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install beautifulsoup4 requests pytest'
+                sh '''
+                  python -m pip install --upgrade pip
+                  pip install beautifulsoup4 requests pytest
+                '''
             }
         }
 
