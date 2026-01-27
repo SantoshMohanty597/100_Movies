@@ -35,6 +35,12 @@ pipeline {
             }
         }
 
+        stage('Manual Approval') {
+            steps {
+                input "Deploy to PRODUCTION?"
+            }
+        }
+
         stage('Deploy to QA') {
             steps {
                 echo "🚀 Deploying ${IMAGE_NAME}:${IMAGE_TAG} to QA environment"
