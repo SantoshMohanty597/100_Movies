@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "100-movies-dev"
+        IMAGE_NAME = "100-movies-qa"
         IMAGE_TAG  = "${BUILD_NUMBER}"
+        ENV        = "qa"
     }
 
     stages {
@@ -34,20 +35,20 @@ pipeline {
             }
         }
 
-        stage('Deploy to DEV') {
+        stage('Deploy to QA') {
             steps {
-                echo "🚀 Deploying ${IMAGE_NAME}:${IMAGE_TAG} to DEV"
-                // kubectl apply -f dev-deployment.yaml (later)
+                echo "🚀 Deploying ${IMAGE_NAME}:${IMAGE_TAG} to QA environment"
+                // kubectl apply -f qa-deployment.yaml
             }
         }
     }
 
     post {
         success {
-            echo "✅ DEV pipeline successful"
+            echo "✅ QA pipeline successful"
         }
         failure {
-            echo "❌ DEV pipeline failed"
+            echo "❌ QA pipeline failed"
         }
     }
 }
