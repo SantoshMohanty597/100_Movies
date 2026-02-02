@@ -70,6 +70,7 @@ pipeline {
                 // kubectl apply -f dev-deployment.yaml
             }
         }
+
     }
 
     post {
